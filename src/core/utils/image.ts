@@ -1,6 +1,6 @@
 export const resolveImageUrl = (imageOrProduct: any, productName: string = '') => {
   const getBaseStorageUrl = () => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+    const apiUrl = import.meta.env.VITE_API_URL || 'https://optik-medio.laravel.cloud/api';
     return apiUrl.replace('/api', '') + '/storage/';
   };
 
