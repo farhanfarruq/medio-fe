@@ -139,7 +139,8 @@ const copyToClipboard = (text: string) => {
                 style="border-color: rgba(193,154,81,0.08);"
               >
                 <div class="w-20 h-20 rounded-none overflow-hidden shrink-0 flex items-center justify-center p-2 border transition-colors" style="background: linear-gradient(145deg, #f5f2ee, #ede7dc); border-color: rgba(193,154,81,0.1);">
-                  <img :id="'item-image-' + item.id" :src="resolveImageUrl(item.product)" :alt="item.product?.name || 'Produk'" class="w-full h-full object-contain mix-blend-multiply" />
+                  <img v-if="item.product" :src="resolveImageUrl(item.product, item.product.name)" :alt="item.product?.name || 'Produk'" class="w-full h-full object-contain mix-blend-multiply" />
+                  <span v-else class="material-symbols-outlined text-2xl" style="color: #c19a51; opacity: 0.5;">image</span>
                 </div>
                 <div class="flex-grow flex flex-col justify-center">
                   <h4 class="font-black text-sm mb-1" style="color: #1a1209;">{{ item.product?.name }}</h4>
