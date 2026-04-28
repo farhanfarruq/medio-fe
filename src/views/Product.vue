@@ -174,9 +174,9 @@ const goToDetail = (slug: string) => {
   <!-- ╔══════════════════════════════════════════╗ -->
   <!-- ║  HERO + GRADIENT BLEED INTO CONTENT     ║ -->
   <!-- ╚══════════════════════════════════════════╝ -->
-  <div class="relative w-full" style="margin-bottom: -80px;">
-    <!-- Hero Image Panel — taller -->
-    <section class="relative w-full overflow-hidden" style="height: 480px;">
+  <div class="relative w-full mb-[-100px] md:mb-[-80px]">
+    <!-- Hero Image Panel — taller on desktop, compact on mobile -->
+    <section class="relative w-full overflow-hidden h-[300px] md:h-[480px]">
       <img
         src="/gambar/hero-bg.jpeg"
         alt="Optik Medio hero"
@@ -211,7 +211,7 @@ const goToDetail = (slug: string) => {
   <main class="max-w-[1440px] mx-auto px-6 md:px-12 pt-4 pb-16 w-full flex-grow relative z-10">
 
     <!-- Category Filter Chips -->
-    <div class="flex flex-wrap items-center gap-2.5 mb-8" style="padding-top: 80px;">
+    <div class="flex flex-wrap items-center gap-2 md:gap-2.5 mb-8 pt-6 md:pt-20">
       <!-- All categories chip -->
       <button
         @click="goToCategory(null)"
@@ -449,11 +449,11 @@ const goToDetail = (slug: string) => {
       </div>
 
       <!-- Mobile: Horizontal Scroll | Desktop: Grid -->
-      <div class="flex overflow-x-auto md:grid md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto pb-4 md:pb-0 snap-x snap-mandatory scrollbar-hide">
+      <div class="flex overflow-x-auto md:grid md:grid-cols-2 gap-5 md:gap-8 max-w-4xl mx-auto px-6 md:px-0 pb-8 md:pb-0 snap-x snap-mandatory scrollbar-hide -mx-6 md:mx-auto">
         <div 
           v-for="(t, idx) in testimonials" 
           :key="idx"
-          class="min-w-[85vw] md:min-w-0 p-8 relative group transition-all duration-500 hover:shadow-xl border border-stone-100 snap-center"
+          class="min-w-[85vw] sm:min-w-[350px] md:min-w-0 p-8 relative group transition-all duration-500 hover:shadow-xl border border-stone-100 snap-center first:ml-6 last:mr-6 md:first:ml-0 md:last:mr-0"
           style="background: white;"
         >
           <div class="absolute -top-4 -left-4 w-12 h-12 flex items-center justify-center bg-stone-900 text-amber-500">
