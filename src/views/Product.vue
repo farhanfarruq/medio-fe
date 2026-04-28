@@ -448,11 +448,12 @@ const goToDetail = (slug: string) => {
         <div class="w-12 h-1 bg-amber-600 mx-auto mt-4"></div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <!-- Mobile: Horizontal Scroll | Desktop: Grid -->
+      <div class="flex overflow-x-auto md:grid md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto pb-4 md:pb-0 snap-x snap-mandatory scrollbar-hide">
         <div 
           v-for="(t, idx) in testimonials" 
           :key="idx"
-          class="p-8 relative group transition-all duration-500 hover:shadow-xl border border-stone-100"
+          class="min-w-[85vw] md:min-w-0 p-8 relative group transition-all duration-500 hover:shadow-xl border border-stone-100 snap-center"
           style="background: white;"
         >
           <div class="absolute -top-4 -left-4 w-12 h-12 flex items-center justify-center bg-stone-900 text-amber-500">
@@ -480,3 +481,14 @@ const goToDetail = (slug: string) => {
 
   </main>
 </template>
+
+<style scoped>
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+</style>
