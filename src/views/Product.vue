@@ -122,7 +122,16 @@ onMounted(() => {
   // Fetch testimonials from settings
   settingRepository.getSettings().then(data => {
     if (data.store_testimonials) {
-      testimonials.value = data.store_testimonials;
+      // Handle if BE returns string instead of parsed array
+      if (typeof data.store_testimonials === 'string') {
+        try {
+          testimonials.value = JSON.parse(data.store_testimonials);
+        } catch (e) {
+          console.error('Failed to parse testimonials string', e);
+        }
+      } else {
+        testimonials.value = data.store_testimonials;
+      }
     }
   });
 });
