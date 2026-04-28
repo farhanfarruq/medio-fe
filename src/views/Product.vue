@@ -192,8 +192,8 @@ const goToDetail = (slug: string) => {
  
       <!-- Hero Content -->
       <div class="relative z-10 h-full max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col justify-end pb-20 pt-32">
-        <p class="text-xs font-bold uppercase tracking-[0.3em] mb-3" style="color: rgba(193,154,81,0.95);">
-          Optik Medio {{ categorySlug && !searchQuery ? '· ' + categoryTitle : '' }}
+        <p v-if="categorySlug || searchQuery" class="text-xs font-bold uppercase tracking-[0.3em] mb-3" style="color: rgba(193,154,81,0.95);">
+          {{ searchQuery ? 'Pencarian' : categoryTitle }}
         </p>
         <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight text-white mb-4" style="font-family: 'Outfit', sans-serif; text-shadow: 0 4px 24px rgba(0,0,0,0.3);">
           {{ categoryTitle }}
@@ -363,14 +363,14 @@ const goToDetail = (slug: string) => {
         <!-- Card Body -->
         <div class="p-4 md:p-5 flex flex-col flex-grow">
           <span class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1" style="color: #8a7a60;">
-            {{ product.name }}
+            {{ product.brand ? product.name : '' }}
           </span>
           <h3
             class="font-bold text-base md:text-lg leading-tight mb-3 transition-colors duration-300 line-clamp-1"
             style="color: #1a1209; font-family: 'Outfit', sans-serif; letter-spacing: -0.01em;"
             :class="{ 'group-hover:text-amber-800': product.stock > 0 }"
           >
-            {{ product.brand || 'Optik Medio' }}
+            {{ product.brand || product.name }}
           </h3>
           <div class="flex justify-between items-center mt-auto">
             <div v-if="!product.is_not_for_sale">
