@@ -14,6 +14,7 @@ const brands = ref<string[]>([]);
 const isLoading = ref(true);
 const hasError = ref(false);
 const categorySlug = ref(route.params.slug as string);
+const searchQuery = ref(route.query.search as string || '');
 const showFilterPanel = ref(false);
 
 const currentPage = ref(1);
@@ -24,6 +25,7 @@ const selectedBrand = ref<string>('');
 const testimonials = ref<Testimonial[]>([]);
 
 const categoryTitle = computed(() => {
+  if (searchQuery.value) return `Hasil Pencarian: "${searchQuery.value}"`;
   if (!categorySlug.value) return 'Koleksi Kami';
   const found = categories.value.find(c => c.slug === categorySlug.value);
   if (found) return found.name;
@@ -34,6 +36,7 @@ const categoryTitle = computed(() => {
 });
 
 const categoryDescription = computed(() => {
+  if (searchQuery.value) return `Menampilkan produk yang cocok dengan pencarian Anda.`;
   if (!categorySlug.value) return 'Temukan koleksi kacamata premium kami, dibuat untuk kenyamanan dan gaya terbaik Anda.';
   const found = categories.value.find(c => c.slug === categorySlug.value);
   if (found?.description) return found.description;
@@ -62,6 +65,9 @@ const fetchProducts = async (isLoadMore = false) => {
     }
     if (selectedBrand.value) {
       params.brand = selectedBrand.value;
+    }
+    if (searchQuery.value) {
+      params.search = searchQuery.value;
     }
     
     const response = await productRepository.getProducts(params);
@@ -117,7 +123,7 @@ const fetchCategories = async () => {
 onMounted(() => {
   fetchCategories();
   fetchBrands();
-  fetchProducts(false);
+  // fetchProducts(false); // Handled by immediate watches
   
   // Fetch testimonials from settings
   settingRepository.getSettings().then(data => {
@@ -139,7 +145,12 @@ onMounted(() => {
 watch(() => route.params.slug, (newSlug) => {
   categorySlug.value = (newSlug as string) || '';
   fetchProducts(false);
-});
+}, { immediate: true });
+
+watch(() => route.query.search, (newSearch) => {
+  searchQuery.value = (newSearch as string) || '';
+  fetchProducts(false);
+}, { immediate: true });
 
 watch(selectedBrand, () => {
   fetchProducts(false);
@@ -180,14 +191,14 @@ const goToDetail = (slug: string) => {
       <div class="absolute" style="bottom: 180px; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(193,154,81,0.5), transparent);"></div>
  
       <!-- Hero Content -->
-      <div class="relative z-10 h-full max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col justify-end pb-28">
+      <div class="relative z-10 h-full max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col justify-end pb-20 pt-32">
         <p class="text-xs font-bold uppercase tracking-[0.3em] mb-3" style="color: rgba(193,154,81,0.95);">
-          Optik Medio {{ categorySlug ? '· ' + categoryTitle : '' }}
+          Optik Medio {{ categorySlug && !searchQuery ? '· ' + categoryTitle : '' }}
         </p>
-        <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-none text-white mb-5" style="font-family: 'Outfit', sans-serif; text-shadow: 0 4px 24px rgba(0,0,0,0.3);">
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight text-white mb-4" style="font-family: 'Outfit', sans-serif; text-shadow: 0 4px 24px rgba(0,0,0,0.3);">
           {{ categoryTitle }}
         </h1>
-        <p class="text-base md:text-lg max-w-xl leading-relaxed" style="color: rgba(255,255,255,0.72);">
+        <p class="text-sm md:text-base max-w-xl leading-relaxed" style="color: rgba(255,255,255,0.72);">
           {{ categoryDescription }}
         </p>
       </div>
