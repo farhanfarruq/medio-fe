@@ -3,12 +3,14 @@ import { useHead } from '@unhead/vue';
 
 // Global SEO Setup
 useHead({
-  titleTemplate: (title) => title ? `${title} | Optik Medio` : 'Optik Medio | Curated Lens Experience',
+  titleTemplate: (title) => title ? `${title} | Optik Medio` : 'Optik Medio | Pengalaman Lensa Terpilih & Berkualitas',
   meta: [
-    { name: 'description', content: 'Optik Medio provides a curated lens experience with premium eyewear and professional eye care services.' },
+    { name: 'description', content: 'Optik Medio menyediakan pilihan lensa terbaik dengan kacamata premium dan layanan perawatan mata profesional.' },
     { property: 'og:type', content: 'website' },
     { property: 'og:site_name', content: 'Optik Medio' },
+    { property: 'og:image', content: '/gambar/medio.jpeg' },
     { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:image', content: '/gambar/medio.jpeg' },
   ],
   link: [
     { rel: 'canonical', href: () => window.location.href },
@@ -20,8 +22,8 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'OpticalBusiness',
         'name': 'Optik Medio',
-        'description': 'Optik Medio provides a curated lens experience with premium eyewear and professional eye care services.',
-        'url': 'https://optikmedio.com',
+        'description': 'Optik Medio menyediakan pilihan lensa terbaik dengan kacamata premium dan layanan perawatan mata profesional.',
+        'url': 'https://optik-medio-shop.vercel.app/',
         'telephone': '+628123456789', // Example, should be dynamic if possible
         'address': {
           '@type': 'PostalAddress',

@@ -22,9 +22,9 @@ const isLensesLoading = ref(false);
 
 // SEO setup
 useHead({
-  title: () => product.value?.name || 'Loading Product...',
+  title: () => product.value?.name || 'Memuat Produk...',
   meta: [
-    { name: 'description', content: () => product.value?.description || 'View details of our premium eyewear collection.' },
+    { name: 'description', content: () => product.value?.description || 'Lihat detail koleksi kacamata premium kami.' },
     { property: 'og:title', content: () => product.value?.name },
     { property: 'og:description', content: () => product.value?.description },
     { property: 'og:image', content: () => product.value ? resolveImageUrl(product.value.images?.[0]) : '' },
