@@ -5,9 +5,20 @@ import { productRepository, type Category } from '../repositories/ProductReposit
 import type { Product } from '../types';
 import { resolveImageUrl } from '../core/utils/image';
 import { settingRepository, type Testimonial } from '../repositories/SettingRepository';
+import { useHead } from '@unhead/vue';
 
 const route = useRoute();
 const router = useRouter();
+
+// SEO Setup
+useHead({
+  title: () => categoryTitle.value,
+  meta: [
+    { name: 'description', content: () => categoryDescription.value },
+    { property: 'og:title', content: () => categoryTitle.value },
+    { property: 'og:description', content: () => categoryDescription.value },
+  ],
+});
 const products = ref<Product[]>([]);
 const categories = ref<Category[]>([]);
 const brands = ref<string[]>([]);

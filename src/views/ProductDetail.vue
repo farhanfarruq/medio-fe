@@ -7,6 +7,7 @@ import type { Product } from '../types';
 
 import { resolveImageUrl } from '../core/utils/image';
 import { useToast } from '../composables/useToast';
+import { useHead } from '@unhead/vue';
 
 const { showToast } = useToast();
 
@@ -18,6 +19,41 @@ const product = ref<Product | null>(null);
 const isLoading = ref(true);
 const lenses = ref<Product[]>([]);
 const isLensesLoading = ref(false);
+
+// SEO setup
+useHead({
+  title: () => product.value?.name || 'Loading Product...',
+  meta: [
+    { name: 'description', content: () => product.value?.description || 'View details of our premium eyewear collection.' },
+    { property: 'og:title', content: () => product.value?.name },
+    { property: 'og:description', content: () => product.value?.description },
+    { property: 'og:image', content: () => product.value ? resolveImageUrl(product.value.images?.[0]) : '' },
+    { property: 'og:type', content: 'product' },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: () => product.value ? JSON.stringify({
+        '@context': 'https://schema.org/',
+        '@type': 'Product',
+        'name': product.value.name,
+        'image': resolveImageUrl(product.value.images?.[0]),
+        'description': product.value.description,
+        'brand': {
+          '@type': 'Brand',
+          'name': product.value.brand || 'Optik Medio'
+        },
+        'offers': {
+          '@type': 'Offer',
+          'url': window.location.href,
+          'priceCurrency': 'IDR',
+          'price': product.value.price,
+          'availability': product.value.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
+        }
+      }) : ''
+    }
+  ]
+});
 
 const formState = reactive({
   color: null as any,
